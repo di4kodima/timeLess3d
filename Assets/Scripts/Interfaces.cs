@@ -11,10 +11,9 @@ public class Interfaces : MonoBehaviour
 
 public interface IActor
 {
-    public void Move(Vector3 vel);                         //Vel формирует контроллер основываясь на WASD
+    public void Move(Vector3 vel);                         //Передвижение в направлении
     public void MoveTo(GameObject target, Action action);  //Для  навигации, приказ идти к объекту и вызвать метод
-    public void MoveTo(Vector3 pos);        //Для  навигации, приказ идти к опр. точку
-    //public void ChangeState();
+    public void MoveTo(Vector3 pos);        //Для  навигации, приказ идти в опр. точку
 }
 
 public interface IController

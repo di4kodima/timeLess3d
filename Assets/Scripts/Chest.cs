@@ -26,9 +26,9 @@ public class Chest : MonoBehaviour, IInteracrive
     {
         Debug.Log("Меня хотят осмотреть");
     }
-    [Action("Открыть",false, 5)]
-    public void Open()
+    [Action("Обыскать", false, 123)]
+    public void Loot()
     {
-        Debug.Log("Меня хотят открыть");
+        Debug.Log("Меня хотят облутать");
     }
 }

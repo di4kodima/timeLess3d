@@ -14,21 +14,20 @@ public class Door : MonoBehaviour, IInteracrive
     {
         mr.material.color = Color.red;
     }
-
     public void MouseEnter()
     {
         mr.material.color = Color.gray;
     }
 
-    [Action("Открыть",true, 2)]
-    public void Open() 
-    {
-        Debug.Log("Открываю дверь");
-    }
-
     [Action("Осмотреть", true, 0)]
-    public void Inspect() 
+    public void Inspect()
     {
         Debug.Log("Осматриваю дверь");
+    }
+
+    [Action("Открыть",true, 2)]
+    public void Open()  
+    {
+        Debug.Log("Открываю дверь");
     }
 }

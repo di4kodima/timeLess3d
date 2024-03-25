@@ -59,6 +59,19 @@ public class PlayerController : MonoBehaviour, IController
         MoveAction.Disable();
     }
 
+    private void OnCameraTransform()
+    {
+        InputAction CamTrns = action.Player.CameraTransform;
+        CamTrns.Enable();
+        Debug.Log(CamTrns.ReadValue<Vector3>());
+        if (CamTrns.ReadValue<Vector3>() != null && CamTrns.ReadValue<Vector3>() != Vector3.zero)
+        {
+            Debug.Log(CamTrns.ReadValue<Vector3>());
+            cam.Rotate(new Vector2(CamTrns.ReadValue<Vector3>().x, CamTrns.ReadValue<Vector3> ().y));
+            cam.Distance += CamTrns.ReadValue<Vector3>().z * 0.5f;
+        }
+    }
+
     private void FixedUpdate()
     {
         MouseMonitoring();
@@ -73,6 +86,13 @@ public class PlayerController : MonoBehaviour, IController
             rot.x = 0;
             actor.transform.rotation = rot;
             actor?.Move(movement);
+        }
+
+        InputAction CamTrns = action.Player.CameraTransform;
+        if(CamTrns != null || CamTrns.ReadValue<Vector2>() != Vector2.zero)
+        {
+            cam.Rotate(new Vector2(CamTrns.ReadValue<Vector3>().x, CamTrns.ReadValue<Vector3>().y));
+            cam.Distance += CamTrns.ReadValue<Vector3>().z * 0.5f;
         }
     }
 }

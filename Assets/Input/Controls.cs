@@ -62,6 +62,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CameraTransform"",
+                    ""type"": ""Value"",
+                    ""id"": ""94ff7e58-d0f2-4032-abf3-6a1f72a2a91e"",
+                    ""expectedControlType"": ""Vector3"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -152,6 +161,83 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""RightMouseButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""3D Vector"",
+                    ""id"": ""b809ff65-40a0-443f-85fb-b7a0cfa82a43"",
+                    ""path"": ""3DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraTransform"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Up"",
+                    ""id"": ""5dbf1a4c-6cfb-420e-a5d2-6d9b27862b38"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraTransform"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Down"",
+                    ""id"": ""10aa1878-a67d-45a7-9cdf-f178f9a6da95"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraTransform"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Left"",
+                    ""id"": ""04c0dfb6-e6c2-45c8-a115-f65c6e814123"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraTransform"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Right"",
+                    ""id"": ""38470c5f-e759-460a-aa88-1f05c262fcc1"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraTransform"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Forward"",
+                    ""id"": ""19675c6d-8b2e-422a-af1f-864051cce6a6"",
+                    ""path"": ""<Keyboard>/numpadMinus"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraTransform"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Backward"",
+                    ""id"": ""b6c39e4e-0a89-4771-9d2e-c918d2d042ef"",
+                    ""path"": ""<Keyboard>/numpadPlus"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraTransform"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -181,6 +267,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player_MouseMove = m_Player.FindAction("MouseMove", throwIfNotFound: true);
         m_Player_TouchMove = m_Player.FindAction("TouchMove", throwIfNotFound: true);
         m_Player_RightMouseButton = m_Player.FindAction("RightMouseButton", throwIfNotFound: true);
+        m_Player_CameraTransform = m_Player.FindAction("CameraTransform", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -246,6 +333,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_MouseMove;
     private readonly InputAction m_Player_TouchMove;
     private readonly InputAction m_Player_RightMouseButton;
+    private readonly InputAction m_Player_CameraTransform;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -254,6 +342,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @MouseMove => m_Wrapper.m_Player_MouseMove;
         public InputAction @TouchMove => m_Wrapper.m_Player_TouchMove;
         public InputAction @RightMouseButton => m_Wrapper.m_Player_RightMouseButton;
+        public InputAction @CameraTransform => m_Wrapper.m_Player_CameraTransform;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -275,6 +364,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @RightMouseButton.started += instance.OnRightMouseButton;
             @RightMouseButton.performed += instance.OnRightMouseButton;
             @RightMouseButton.canceled += instance.OnRightMouseButton;
+            @CameraTransform.started += instance.OnCameraTransform;
+            @CameraTransform.performed += instance.OnCameraTransform;
+            @CameraTransform.canceled += instance.OnCameraTransform;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -291,6 +383,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @RightMouseButton.started -= instance.OnRightMouseButton;
             @RightMouseButton.performed -= instance.OnRightMouseButton;
             @RightMouseButton.canceled -= instance.OnRightMouseButton;
+            @CameraTransform.started -= instance.OnCameraTransform;
+            @CameraTransform.performed -= instance.OnCameraTransform;
+            @CameraTransform.canceled -= instance.OnCameraTransform;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -323,5 +418,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnMouseMove(InputAction.CallbackContext context);
         void OnTouchMove(InputAction.CallbackContext context);
         void OnRightMouseButton(InputAction.CallbackContext context);
+        void OnCameraTransform(InputAction.CallbackContext context);
     }
 }
